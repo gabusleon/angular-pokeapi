@@ -1,6 +1,6 @@
 # Angular PokéAPI
 
-Ejemplo educativo con Angular 17.3 que consulta PokéAPI mediante un servicio con `HttpClient` y muestra el nombre, ID, imagen y tipos de un Pokémon. Incluye componentes standalone, interfaces TypeScript y estados de carga y error.
+Ejemplo educativo con Angular 17.3 que consulta PokéAPI mediante un servicio con `fetch` y muestra el nombre, ID, imagen y tipos de un Pokémon. Incluye componentes standalone, interfaces TypeScript y estados de carga y error.
 
 ## CÓMO EJECUTAR EL PROYECTO
 
@@ -62,9 +62,9 @@ Puedes usar, por ejemplo, `bulbasaur`, `charmander` o `squirtle`.
 
 - `src/app/models/pokemon-api-response.ts`: interfaz de los campos utilizados de la respuesta de PokéAPI.
 - `src/app/models/pokemon.ts`: interfaz de los datos que utiliza la aplicación.
-- `src/app/services/pokemon.service.ts`: inyecta `HttpClient`, consulta la API y transforma la respuesta a `Pokemon`. Usa `firstValueFrom` para devolver `Promise<Pokemon>`.
+- `src/app/services/pokemon.service.ts`: consulta la API con `fetch` y transforma la respuesta a `Pokemon`. Devuelve `Promise<Pokemon>`.
 - `src/app/components/mi-pokemon/`: llama al servicio desde `ngOnInit()` y muestra el resultado.
-- `src/app/app.config.ts`: registra `provideHttpClient()`.
+- `src/app/app.config.ts`: configuración global de Angular y del enrutador.
 - `src/app/components/mi-componente/`: ejemplo adicional de interpolación y uso de `DatePipe`, con datos ficticios.
 
 ## Compilar y ejecutar pruebas
