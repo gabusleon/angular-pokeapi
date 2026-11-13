@@ -1,27 +1,87 @@
-# MyAngularApp
+# Angular PokéAPI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+Ejemplo educativo con Angular 17.3 que consulta PokéAPI mediante un servicio con `HttpClient` y muestra el nombre, ID, imagen y tipos de un Pokémon. Incluye componentes standalone, interfaces TypeScript y estados de carga y error.
 
-## Development server
+## CÓMO EJECUTAR EL PROYECTO
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 1. Requisitos
 
-## Code scaffolding
+- Git.
+- Node.js 20.x desde la versión 20.9.0, con npm. Angular 17.3 también admite Node.js 18.x desde 18.13.0. Estas versiones se indican por compatibilidad con este ejemplo: [tabla oficial](https://angular.dev/reference/versions).
+- Conexión a Internet para instalar dependencias y consultar PokéAPI y las imágenes.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Comprueba tu instalación:
 
-## Build
+```bash
+node --version
+npm --version
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 2. Clonar el repositorio
 
-## Running unit tests
+```bash
+git clone https://github.com/gabusleon/angular-pokeapi.git
+cd angular-pokeapi
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3. Instalar las dependencias
 
-## Running end-to-end tests
+```bash
+npm ci
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Este comando instala las versiones registradas en `package-lock.json`. No es necesario instalar Angular CLI globalmente.
 
-## Further help
+### 4. Iniciar la aplicación
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm start
+```
+
+Abre **http://localhost:4200/** en el navegador. Al iniciar, se consulta `pikachu` automáticamente. Los cambios guardados en el código se reflejan durante el desarrollo. Para detener el servidor, presiona `Ctrl+C` en la terminal.
+
+Si el puerto está ocupado:
+
+```bash
+npm start -- --port 4201
+```
+
+En ese caso, abre **http://localhost:4201/**.
+
+## Cambiar el Pokémon
+
+En `src/app/components/mi-pokemon/mi-pokemon.component.ts`, modifica el atributo y guarda:
+
+```ts
+public nombre: string = 'pikachu';
+```
+
+Puedes usar, por ejemplo, `bulbasaur`, `charmander` o `squirtle`.
+
+## Organización del ejemplo
+
+- `src/app/models/pokemon-api-response.ts`: interfaz de los campos utilizados de la respuesta de PokéAPI.
+- `src/app/models/pokemon.ts`: interfaz de los datos que utiliza la aplicación.
+- `src/app/services/pokemon.service.ts`: inyecta `HttpClient`, consulta la API y transforma la respuesta a `Pokemon`. Usa `firstValueFrom` para devolver `Promise<Pokemon>`.
+- `src/app/components/mi-pokemon/`: llama al servicio desde `ngOnInit()` y muestra el resultado.
+- `src/app/app.config.ts`: registra `provideHttpClient()`.
+- `src/app/components/mi-componente/`: ejemplo adicional de interpolación y uso de `DatePipe`, con datos ficticios.
+
+## Compilar y ejecutar pruebas
+
+```bash
+npm run build
+npm test
+```
+
+La compilación se genera en `dist/my-angular-app`. Las pruebas usan Karma y requieren Chrome. Para ejecutarlas una sola vez sin ventana:
+
+```bash
+npm test -- --watch=false --browsers=ChromeHeadless
+```
+
+## Problemas de conexión
+
+La consulta usa `https://pokeapi.co/api/v2/pokemon/{nombre}`. Un nombre inexistente devuelve un error 404. Si aparece `ERR_NAME_NOT_RESOLVED`, revisa la conexión, DNS, VPN o proxy: cambiar de cliente HTTP no resuelve un fallo de DNS. No se necesitan claves de API ni un servidor backend para este ejemplo.
+
+Documentación de la API: https://pokeapi.co/docs/v2

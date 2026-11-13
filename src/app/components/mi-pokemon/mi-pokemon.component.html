@@ -1,0 +1,16 @@
+<section aria-labelledby="pokemon-titulo" aria-live="polite">
+  <h2 id="pokemon-titulo">Mi Pokémon</h2>
+
+  @if (cargando) {
+    <p>Cargando Pokémon...</p>
+  } @else if (error) {
+    <p role="alert">{{ error }}</p>
+    <button type="button" (click)="buscarPokemon()">Reintentar</button>
+  } @else if (id !== null) {
+    <h3>{{ nombrePokemon }} #{{ id }}</h3>
+    @if (imagen) {
+      <img [src]="imagen" [alt]="nombrePokemon" width="160" height="160">
+    }
+    <p>Tipos: {{ tipos.join(', ') }}</p>
+  }
+</section>
